@@ -28,6 +28,7 @@ class Jservice
 
     @http = Net::HTTP.new(@config[:url], @config[:port])
     @http.use_ssl = @config[:use_ssl]
+    @http.start()
   end
 
   # request a page of clues
@@ -53,15 +54,52 @@ class Jservice
   end
   
   # request random clues
+  def random_clues(count = 1)
+    result = nil
+    begin
+      result = api_request('random', count: count)
+    rescue ex
+      raise ex
+    else
+      return result
+    end
+  end
+  
+  # request random final jeopardy clues
+  def random_finals(count = 1)
+    result = nil
+    begin
+      result = api_request('final', count: count)
+    rescue ex
+      raise ex
+    else
+      return result
+    end
+  end
+  
+  # request a list/page of categories
   # = options =
-  # count ( int): number of clues to return
-  def random_clues(**options)
+  #  count (int): amount of categories to return, limited to 100 at a time
+  # offset (int): offsets the starting id of categories returned. Useful in pagination.
+  def categories(**options)
     # validate input
-    filter_keys(options, :count)
+    filter_keys(options, :count, :offset)
     
     result = nil
     begin
-      result = api_request('random', options)
+      result = api_request('categories', options)
+    rescue ex
+      raise ex
+    else
+      return result
+    end
+  end
+  
+  # request a specific category
+  def category(id)
+    result = nil
+    begin
+      result = api_request('category', id: id)
     rescue ex
       raise ex
     else
