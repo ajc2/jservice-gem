@@ -13,9 +13,6 @@ class Jservice
     @config = {
       # base URL of API
       url: 'jservice.io',
-      # length of one "page" for pagination
-      # a maximum of 100 is allowed
-      page_length: 100,
       # use https
       use_ssl: true,
       # port to use for API (`nil` for default)
@@ -38,7 +35,6 @@ class Jservice
   # min_date (date): earliest date to show, based on original air date
   # max_date (date): latest date to show, based on original air date
   #   offset ( int): offsets the returned clues. Useful in pagination
-  #     page ( int): get page n of clues, based on page_length
   def clues(**options)
     # validate input
     filter_keys(options, :value, :category, :min_date, :max_date, :offset, :page)
@@ -54,6 +50,7 @@ class Jservice
   end
   
   # request random clues
+  # count: number of clues to return
   def random_clues(count = 1)
     result = nil
     begin
@@ -66,6 +63,7 @@ class Jservice
   end
   
   # request random final jeopardy clues
+  # count: number of clues to return
   def random_finals(count = 1)
     result = nil
     begin
@@ -96,6 +94,7 @@ class Jservice
   end
   
   # request a specific category
+  # id: integer ID of category
   def category(id)
     result = nil
     begin
