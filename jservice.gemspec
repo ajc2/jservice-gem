@@ -7,6 +7,7 @@ Gem::Specification.new do |spec|
   spec.version = Jservice::VERSION
   spec.authors = ["Alex Craik"]
   spec.email = ["contact@ajc2.xyz"]
+  spec.license = "BSD-3-Clause"
 
   spec.summary = "Bindings to the jService REST API for Jeopardy questions."
   #spec.description = "Write a longer description or delete this line."
